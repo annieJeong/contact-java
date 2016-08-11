@@ -1,56 +1,63 @@
 package kr.co.kosta.contact;
 
+import java.awt.Choice;
 import java.io.*;
 
 public class ContactManagerMain {
 
 	public static void main(String[] args) throws IOException {
-		//1. »ç¿ëÀÚ¿¡°Ô È­¸éº¸¿©ÁÖ±â. (View)
+		//1. ì‚¬ìš©ìì—ê²Œ í™”ë©´ë³´ì—¬ì£¼ê¸°. (View)
 		/**
 		 * ====================
-		 * 1. ¿¬¶ôÃ³ µî·Ï
-		 * 2. ¿¬¶ôÃ³ ÀüÃ¼º¸±â
-		 * Q. Á¾·á
+		 * 1. ì—°ë½ì²˜ ë“±ë¡
+		 * 2. ì—°ë½ì²˜ ì „ì²´ë³´ê¸°
+		 * Q. ì¢…ë£Œ
 		 * ====================
-		 * >> ¼±ÅÃ
+		 * >> ì„ íƒ
 		 * 
 		 * EX >
-		 * 1. ¼±ÅÃ ->
-		 * »ç¿ëÀÚÀÌ¸§ ÀÌ¸ŞÀÏ ³ªÀÌ ÁÖ¼Ò¸¦ °¢°¢ ÀÔ·ÂÇØÁÖ¼¼¿ä.
-		 * °¢°¢ ÀÔ·ÂÇØ ÁÖ¼¼¿ä. ±¸ºĞÀÚ´Â ½ºÆäÀÌ½ºÀÔ´Ï´Ù.
+		 * 1. ì„ íƒ ->
+		 * ì‚¬ìš©ìì´ë¦„ ì´ë©”ì¼ ë‚˜ì´ ì£¼ì†Œë¥¼ ê°ê° ì…ë ¥í•´ì£¼ì„¸ìš”.
+		 * ê°ê° ì…ë ¥í•´ ì£¼ì„¸ìš”. êµ¬ë¶„ìëŠ” ìŠ¤í˜ì´ìŠ¤ì…ë‹ˆë‹¤.
 		 * 
 		 */
+		String choice = "";
+		do {
+			view();
+			
+			BufferedReader br = new BufferedReader(
+					new InputStreamReader(System.in));
+			
+			choice = br.readLine();
+			
+			if (choice.startsWith("1")) {
+				System.out.println(">> 1. ì‚¬ìš©ì ìƒì„±");
+				createUser();
+			}
+			else if (choice.startsWith("2")) {
+				System.out.println(">> 2. ì‚¬ìš©ì ëª©ë¡ë³´ê¸°");
+				readUser();
+			}
+			else {
+				
+			}
+			
+		} while (!choice.trim().toUpperCase().startsWith("Q"));
+		System.out.println("ì¢…ë£Œí•˜ì…¨ìŠµë‹ˆë‹¤...");
 		
-		view();
-		String choice;
-		//ÄÜ¼ÖÀ» ÅëÇØ »ç¿ëÀÚ ÀÔ·ÂÀ» ¹ŞÀ» ¼ö ÀÖ´Â ½ºÆ®¸² »ı¼º
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		choice = reader.readLine();
-		switch(choice){
-		case "1":
-			//¿¬¶ôÃ³ µî·Ï
-			createUser();
-			break;
-		case "2":
-			//¿¬¶ôÃ³ ÀüÃ¼º¸±â
-			break;
-		case "Q":
-			//Á¾·á
-			break;
-		}
-		/*»ç¿ëÀÚ¾È³»¸Ş½ÃÁö
-		System.out.print("¼ºÇÔÀ» ¸»¾¸ÇÏ¼¼¿ä:");
+		
+		/*ì‚¬ìš©ìì•ˆë‚´ë©”ì‹œì§€
+		System.out.print("ì„±í•¨ì„ ë§ì”€í•˜ì„¸ìš”:");
 		String name= reader.readLine();
 		
-		System.out.print("ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä:");
+		System.out.print("ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”:");
 		String email = reader.readLine();
 		
-		System.out.print("³ªÀÌ¸¦ ÀÔ·ÂÇÏ¼¼¿ä:");
+		System.out.print("ë‚˜ì´ë¥¼ ì…ë ¥í•˜ì„¸ìš”:");
 		String age = reader.readLine();
 		
-		System.out.print("Áö¿ªÀ» ÀÔ·ÂÇÏ¼¼¿ä:");
+		System.out.print("ì§€ì—­ì„ ì…ë ¥í•˜ì„¸ìš”:");
 		String locate = reader.readLine();
-
 		Contact contact = new Contact(name,email,age,locate);
 		File file1 = new File("C:\\Users\\User\\workspace\\input\\user.txt");
 		
@@ -68,29 +75,47 @@ public class ContactManagerMain {
 
 	public static void view() {
 		System.out.println("====================");
-		System.out.println("1. ¿¬¶ôÃ³µî·Ï");
-		System.out.println("2. ¿¬¶ôÃ³ ÀüÃ¼º¸±â");
-		System.out.println("Q. Á¾·á");
+		System.out.println("1. ì—°ë½ì²˜ë“±ë¡");
+		System.out.println("2. ì—°ë½ì²˜ ì „ì²´ë³´ê¸°");
+		System.out.println("Q. ì¢…ë£Œ");
 		System.out.println("====================");
 
 	}
 	
+	@SuppressWarnings("resource")
 	public static void createUser() throws IOException{
 		BufferedReader reader2 = new BufferedReader(new InputStreamReader(System.in));
+		try{
+		BufferedWriter bW;
+		FileWriter fw;
+		fw = new FileWriter("test.txt", false);
+		bW = new BufferedWriter(fw);
 		
-		System.out.print("»ç¿ëÀÚÀÌ¸§ ÀÌ¸ŞÀÏ ³ªÀÌ ÁÖ¼Ò¸¦ °¢°¢ ÀÔ·ÂÇØÁÖ¼¼¿ä. ±¸ºĞÀÚ´Â ½ºÆäÀÌ½ºÀÔ´Ï´Ù.");
+		System.out.println("ì‚¬ìš©ìì´ë¦„ ì´ë©”ì¼ ë‚˜ì´ ì£¼ì†Œë¥¼ ê°ê° ì…ë ¥í•´ì£¼ì„¸ìš”. êµ¬ë¶„ìëŠ” ìŠ¤í˜ì´ìŠ¤ì…ë‹ˆë‹¤.");
 		String user= reader2.readLine();
 		String[] result = user.split(" ",4);
-		String all = "»ç¿ëÀÚÀÌ¸§ : "+result[0]+"\nÀÌ¸ŞÀÏ :"+result[1]+"\n³ªÀÌ :"+result[2]+"\nÁÖ¼Ò :"+result[3];
+		
+		bW.write("ì‚¬ìš©ìì´ë¦„ : "+result[0]+" ì´ë©”ì¼ :"+result[1]+" ë‚˜ì´ :"+result[2]+" ì£¼ì†Œ :"+result[3]);
+		bW.newLine();	//ì¤„ë°”ê¿ˆ
+		bW.close();
+		}catch(IOException io){
+			System.out.println("error");
+		}
+	}
+	public static void readUser() throws IOException{
+		try{
+			BufferedReader reader = new BufferedReader(new FileReader("test.txt"));
+		
+			String txt = "";
 
-		File file1 = new File("C:\\Users\\User\\workspace\\input\\user.txt");
-		
-		try(BufferedWriter writer=new BufferedWriter(
-				new OutputStreamWriter(new FileOutputStream(file1),"UTF-8") {
-			//ÆÄÀÏ¿¡ ¹®ÀÚ¿­Ãâ·Â
-			writer.write(all);
-			writer.newLine();
-		}));
-		
+			while((txt = reader.readLine()) != null) 
+			{
+				System.out.println(txt);
+			}
+
+			reader.close();
+		}catch(IOException io){
+			System.out.println("error");
+		}
 	}
 }
