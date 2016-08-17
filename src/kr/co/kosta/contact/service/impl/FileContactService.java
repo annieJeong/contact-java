@@ -9,7 +9,7 @@ public class FileContactService implements ContactService {
 
 	@Override
 	public void registContact(Contact contact) {
-
+		System.out.println("Contanct regist Ok...");
 		
 	}
 

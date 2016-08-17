@@ -3,14 +3,14 @@ package kr.co.kosta.contact.service;
 import kr.co.kosta.contact.model.Contact;
 import java.util.List;
 /**
- * Å¬·¡½º ¼³¸í
+ * 
  * @author User
  * @version
  * 
  */
 public interface ContactService {
 	/**
-	 * ¸Þ¼Òµå¼³¸í
+	 * ï¿½Þ¼Òµå¼³ï¿½ï¿½
 	 * @param contact
 	 * 
 	 */

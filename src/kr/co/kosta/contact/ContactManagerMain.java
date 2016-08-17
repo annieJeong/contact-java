@@ -37,14 +37,14 @@ public class ContactManagerMain {
 			else if (choice.startsWith("2")) {
 				System.out.println(">> 2. 사용자 목록보기");
 				readUser();
-			}
-			else {
-				
+			}else if (choice.trim().toUpperCase().startsWith("Q")){
+				System.out.println("종료하셨습니다...");
+				break;
+			}else {
+				System.out.println("잘못누르셨습니다.");
 			}
 			
-		} while (!choice.trim().toUpperCase().startsWith("Q"));
-		System.out.println("종료하셨습니다...");
-		
+		} while (true);
 		
 		/*사용자안내메시지
 		System.out.print("성함을 말씀하세요:");
