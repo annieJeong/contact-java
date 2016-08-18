@@ -4,14 +4,14 @@ public class Contact {
 
 	private String name;
 	private String email;
-	private String age;
+	private int age;
 	private String addr;
 
 	public Contact() {
-
+		
 	}
 
-	public Contact(String name, String email, String age, String addr) {
+	public Contact(String name, String email, int age, String addr) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -40,11 +40,11 @@ public class Contact {
 		this.email = email;
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 

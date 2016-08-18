@@ -1,7 +1,12 @@
 package kr.co.kosta.contact;
 
-import java.awt.Choice;
 import java.io.*;
+
+import kr.co.kosta.contact.model.Contact;
+import kr.co.kosta.contact.service.ContactService_DB;
+import kr.co.kosta.contact.service.impl.DBContactService;
+//import kr.co.kosta.contact.service.impl.FileContactService;
+//import kr.co.kosta.contact.service.ContactService;
 
 public class ContactManagerMain {
 
@@ -29,14 +34,29 @@ public class ContactManagerMain {
 					new InputStreamReader(System.in));
 			
 			choice = br.readLine();
+			ContactService_DB ss = new DBContactService();
 			
 			if (choice.startsWith("1")) {
 				System.out.println(">> 1. 사용자 생성");
-				createUser();
+				Contact contact = makeContactFromUserInput();
+				
+				ss.insertUser(contact);
+				//ContactService service = new FileContactService();
+				//service.registContact(contact);		//file
 			}
 			else if (choice.startsWith("2")) {
 				System.out.println(">> 2. 사용자 목록보기");
-				readUser();
+				ss.AllUserDisplay();
+				//readUser();
+			}else if (choice.startsWith("3")) {
+				System.out.println(">> 3. 사용자 수정하기");
+				System.out.println("먼저 수정 내용을 입력해 주세요.");
+				Contact contact = makeContactFromUserInput();
+				ss.ModifyUser(contact);
+				//readUser();
+			}else if (choice.startsWith("4")){
+				System.out.println(">> 4. 사용자 삭제하기");
+				ss.DeleteUser();
 			}else if (choice.trim().toUpperCase().startsWith("Q")){
 				System.out.println("종료하셨습니다...");
 				break;
@@ -46,43 +66,39 @@ public class ContactManagerMain {
 			
 		} while (true);
 		
-		/*사용자안내메시지
-		System.out.print("성함을 말씀하세요:");
-		String name= reader.readLine();
 		
-		System.out.print("이메일을 입력하세요:");
-		String email = reader.readLine();
-		
-		System.out.print("나이를 입력하세요:");
-		String age = reader.readLine();
-		
-		System.out.print("지역을 입력하세요:");
-		String locate = reader.readLine();
-		Contact contact = new Contact(name,email,age,locate);
-		File file1 = new File("C:\\Users\\User\\workspace\\input\\user.txt");
-		
-		try(BufferedWriter writer = new BufferedWriter(
-			new OutputStreamWriter(new FileOutputStream(file1),"UTF-8"){
-				writer.write();
-			}
-		))catch(IOException exception){
-			
-		}
-			
-		System.out.println(contact);
-		*/
 	}
 
 	public static void view() {
 		System.out.println("====================");
 		System.out.println("1. 연락처등록");
 		System.out.println("2. 연락처 전체보기");
+		System.out.println("3. 연락처 수정");
+		System.out.println("4. 연락처 삭제");
 		System.out.println("Q. 종료");
 		System.out.println("====================");
+		System.out.print("Press>>");
 
 	}
 	
-	@SuppressWarnings("resource")
+	private static Contact makeContactFromUserInput() throws IOException{
+		System.out.println("이름 이메일 나이 주소를 각각 슬래시(/)로 구분해서 입력해 주세요.");
+		BufferedReader br = new BufferedReader(
+				new InputStreamReader(System.in));
+		String inputFromUser = br.readLine();
+		String[] result = inputFromUser.split("/",4);
+		//데이터를 가지고 Contact객체를 생성.
+		Contact contact = new Contact();
+		contact.setName(result[0]);
+		contact.setEmail(result[1]);
+		contact.setAge(Integer.parseInt(result[2]));
+		contact.setAddr(result[3]);
+		
+		return contact;
+	}
+	
+	
+	/*
 	public static void createUser() throws IOException{
 		BufferedReader reader2 = new BufferedReader(new InputStreamReader(System.in));
 		try{
@@ -99,7 +115,7 @@ public class ContactManagerMain {
 		bW.newLine();	//줄바꿈
 		bW.close();
 		}catch(IOException io){
-			System.out.println("error");
+			System.out.println("error");   v
 		}
 	}
 	public static void readUser() throws IOException{
@@ -118,4 +134,5 @@ public class ContactManagerMain {
 			System.out.println("error");
 		}
 	}
+	*/
 }
